@@ -2,7 +2,7 @@ $(init);
 
 function init() {
 
-  $("body").on('click', '#btnLogin', doLogin);
+  $("body").on('click', '#loginBtn', doLogin);
 }
 
 function doLogin() {
@@ -20,6 +20,9 @@ function doLogin() {
       if (result.code == 99) {
         $(".login-box-msg").text(result.msg);
       } else {
+        $.cookie('username', result.data.username, {expires:30});
+        $.cookie('password', result.data.password, {expires:30});
+        $.cookie('id', result.data._id, {expires:30});
         location.href = "/blog";
       }
     }

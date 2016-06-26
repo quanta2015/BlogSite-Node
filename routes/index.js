@@ -13,20 +13,10 @@ router.get('/login', function(req, res, next) {
 
 router.post('/login', function(req, res, next) {
   dbHelper.findUsr(req.body, function (success, doc) {
-    if(success) {
-      res.send(doc);
-    }else{
-      res.send(doc);
-    }
+    res.send(doc);
   })
-
-  // dbHelper.addUser(req.body,function(success,doc){
-  //   if(success) {
-  //     res.send(doc);
-  //   }else{
-  //     console.log(doc);
-  //   }
-  // })
 });
+
+
 
 module.exports = router;

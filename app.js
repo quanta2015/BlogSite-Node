@@ -12,7 +12,7 @@ var dbHelper = require('./db/dbHelper')
 
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var admin = require('./routes/admin');
 
 var app = express();
 
@@ -44,13 +44,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/admin', admin);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
-  res.render('404');
+  res.render('./error/404', {layout: 'error'});
 });
 
 
@@ -59,7 +59,7 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error', {
+    res.render('./error/500', {
       message: err.message,
       error: err
     });
@@ -70,7 +70,7 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.render('error', {
+  res.render('./error/500', {
     message: err.message,
     error: {}
   });

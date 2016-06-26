@@ -918,7 +918,8 @@ a:hover, a:active, a:focus {
 	width: 90px;
 	border: 3px solid;
 	border-color: transparent;
-	border-color: rgba(255, 255, 255, 0.2)
+	border-color: rgba(255, 255, 255, 0.2);
+	background: #fff;
 }
 .navbar-nav>.user-menu>.dropdown-menu>li.user-header>p {
 	z-index: 5;
