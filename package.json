@@ -17,6 +17,7 @@
   "devDependencies": {
     "express-handlebars": "^3.0.0",
     "moment": "^2.13.0",
-    "mongoose": "^4.5.1"
+    "mongoose": "^4.5.1",
+    "remarkable": "^1.6.2"
   }
 }

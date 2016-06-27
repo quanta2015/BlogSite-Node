@@ -4236,3 +4236,7 @@ table.text-center, table.text-center td, table.text-center th {
 	color: #aaa;
 }
 
+.user-block .postdate b {
+	margin-right: 20px;
+}
+

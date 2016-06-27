@@ -7,7 +7,7 @@ router.get('/blog', function(req, res, next) {
 
   dbHelper.findNews(req.body, function (success, doc) {
     // res.send(doc);
-    res.render('blog', { entries: doc });
+    res.render('blog', { entries: doc , layout: 'main'});
   })
 
 });

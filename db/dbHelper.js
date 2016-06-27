@@ -3,6 +3,9 @@ var mongoose = require('./db.js');
 var User = require('./schema/user');
 var News = require('./schema/news');
 
+var webHelper = require('../lib/webHelper');
+var md = webHelper.Remarkable();
+
 exports.findUsr = function(data, cb) {
 
     User.findOne({
@@ -47,6 +50,9 @@ exports.addUser = function(data, cb) {
 };
 
 exports.addNews = function(data, cb) {
+
+
+    data.content = md.render(data.content);
 
     var news = new News({
         title: data.title,
