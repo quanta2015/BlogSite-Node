@@ -8,7 +8,7 @@ router.get('/news', function(req, res, next) {
 });
 
 router.post('/news', function(req, res, next) {
-  dbHelper.findNews(req.body, function (success, doc) {
+  dbHelper.addNews(req.body, function (success, doc) {
     res.send(doc);
   })
 });

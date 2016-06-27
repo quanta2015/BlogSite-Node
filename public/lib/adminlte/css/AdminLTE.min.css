@@ -4221,3 +4221,18 @@ table.text-center, table.text-center td, table.text-center th {
 	}
 }
 
+.user-block .title {
+	margin-left: 10px;
+	display: block;
+	font: 24px/1.5 "microsoft yahei";
+	font-weight: 600;
+	float: left;
+}
+
+.user-block .postdate {
+	display: block;
+	float: right;
+	font: 12px/1.5 'microsoft yahei';
+	color: #aaa;
+}
+

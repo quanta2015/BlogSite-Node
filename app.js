@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var exphbs      = require('express-handlebars');
+var hbsHelper = require('./lib/hbsHelper');
 
 var mongoose = require('mongoose');
 var config = require('./config');
@@ -25,7 +26,8 @@ var hbs = exphbs.create({
   partialsDir: 'views/partials',
   layoutsDir: "views/layouts/",
   defaultLayout: 'main',
-  extname: '.hbs'
+  extname: '.hbs',
+  helpers: hbsHelper
 });
 app.engine('hbs', hbs.engine);
 

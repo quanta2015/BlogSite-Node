@@ -64,7 +64,7 @@ exports.addNews = function(data, cb) {
 };
 
 exports.findNews = function(data, cb) {
-    News.find({author:'576c9d17f67254902ba0664d'})
+    News.find()
         .populate('author')
         .exec(function(err, docs) {
 
@@ -72,7 +72,7 @@ exports.findNews = function(data, cb) {
             for(var i=0;i<docs.length;i++) {
                 newsList.push(docs[i].toObject());
             }
-            console.log(newsList);
+            cb(true,newsList);
         });
 
 };
