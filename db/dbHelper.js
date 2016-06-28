@@ -4,6 +4,8 @@ var User = require('./schema/user');
 var News = require('./schema/news');
 
 var webHelper = require('../lib/webHelper');
+var async = require('async');
+
 var md = webHelper.Remarkable();
 
 exports.findUsr = function(data, cb) {
@@ -69,16 +71,61 @@ exports.addNews = function(data, cb) {
     })
 };
 
-exports.findNews = function(data, cb) {
-    News.find()
-        .populate('author')
-        .exec(function(err, docs) {
+exports.findNews = function(req, cb) {
+    // News.find()
+    //     .populate('author')
+    //     .exec(function(err, docs) {
+    //
+    //         var newsList=new Array();
+    //         for(var i=0;i<docs.length;i++) {
+    //             newsList.push(docs[i].toObject());
+    //         }
+    //         cb(true,newsList);
+    //     });
 
-            var newsList=new Array();
-            for(var i=0;i<docs.length;i++) {
-                newsList.push(docs[i].toObject());
-            }
-            cb(true,newsList);
-        });
+    var page = req.query.page || 1 ;
+    this.pageQuery(page, 5, News, 'author', {}, {
+        created_time: 'desc'
+    }, function(error, data){
+        if(error){
+            next(error);
+        }else{
+            // console.log(data.results)
+            cb(true,data);
+        }
+    });
 
+};
+
+
+
+exports.pageQuery = function (page, pageSize, Model, populate, queryParams, sortParams, callback) {
+    var start = (page - 1) * pageSize;
+    var $page = {
+        pageNumber: page
+    };
+    async.parallel({
+        count: function (done) {  // 查询数量
+            Model.count(queryParams).exec(function (err, count) {
+                done(err, count);
+            });
+        },
+        records: function (done) {   // 查询一页的记录
+            Model.find(queryParams).skip(start).limit(pageSize).populate(populate).sort(sortParams).exec(function (err, doc) {
+                done(err, doc);
+            });
+        }
+    }, function (err, results) {
+
+        var newsList=new Array();
+        for(var i=0;i<results.records.length;i++) {
+            newsList.push(results.records[i].toObject());
+        }
+
+        var count = results.count;
+        $page.pageCount = parseInt((count - 1) / pageSize + 1);
+        $page.results = newsList;
+        $page.count = count;
+        callback(err, $page);
+    });
 };

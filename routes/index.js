@@ -5,9 +5,15 @@ var dbHelper = require('../db/dbHelper');
 
 router.get('/blog', function(req, res, next) {
 
-  dbHelper.findNews(req.body, function (success, doc) {
+  dbHelper.findNews(req, function (success, data) {
     // res.send(doc);
-    res.render('blog', { entries: doc , layout: 'main'});
+    // res.render('blog', { entries: doc , layout: 'main'});
+    res.render('blog', {
+      entries: data.results,
+      pageCount: data.pageCount,
+      pageNumber: data.pageNumber,
+      count: data.count,
+    });
   })
 
 });

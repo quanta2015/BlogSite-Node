@@ -16,7 +16,7 @@
       <div class="box box-widget">
         <div class="box-header with-border">
           <div class="user-block">
-            <img class="img-circle" src="/img/user.png" alt="User Image">
+            <img class="img-circle" src="{{author.imgUrl}}" alt="User Image">
             <span class="title"><a href="#">{{title}}</a></span>
             <span class="postdate"><b>发布于 {{formatDate meta.createAt}}</b><i>{{timeFromNow meta.createAt}}</i></span>
           </div>
@@ -26,6 +26,31 @@
         </div>
       </div>
     {{/each}}
+
+        <div class="box-footer">
+            <nav>
+                <ul class="pagination">
+                    <li>
+                        <a href="{{#le pageNumber 1}}?{{else}}?page={{reduce pageNumber 1}}{{/le}}"
+                           aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {{#times pageCount 1 pageCount}}
+                        <li {{#equals pageNumber this.step}}class="active" {{/equals}}>
+                            <a href="?page={{step}}{{#if recommend}}&recommend={{recommend}}{{/if}}{{#if type}}&type={{type}}{{/if}}">{{step}}</a>
+                        </li>
+                    {{/times}}
+                    <li>
+                        <a href="{{#ge pageNumber pageCount}}?page={{pageCount}}{{else}}?page={{add pageNumber 1}}{{/ge}}"
+                           aria-label="Previous">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
     </section>
 </div>
 
