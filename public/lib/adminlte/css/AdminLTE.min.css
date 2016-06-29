@@ -4240,3 +4240,12 @@ table.text-center, table.text-center td, table.text-center th {
 	margin-right: 20px;
 }
 
+.menu-block {
+    margin-top: 20px;
+}
+
+.menu-block a {
+    float: right;
+    display: block;
+    font-size: 10px;
+}

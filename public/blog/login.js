@@ -1,7 +1,6 @@
 $(init);
 
 function init() {
-
   $("body").on('click', '#loginBtn', doLogin);
 }
 
@@ -22,8 +21,9 @@ function doLogin() {
       } else {
         $.cookie('username', result.data.username, {expires:30});
         $.cookie('password', result.data.password, {expires:30});
+        $.cookie('imgurl', result.data.imgUrl, {expires:30});
         $.cookie('id', result.data._id, {expires:30});
-        location.href = "/blog";
+        location.href = "/blogs";
       }
     }
   })

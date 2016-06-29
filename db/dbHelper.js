@@ -2,11 +2,12 @@ var entries = require('./jsonRes');
 var mongoose = require('./db.js');
 var User = require('./schema/user');
 var News = require('./schema/news');
-
 var webHelper = require('../lib/webHelper');
 var async = require('async');
-
 var md = webHelper.Remarkable();
+
+
+var PAGE_SIZE = 5;
 
 exports.findUsr = function(data, cb) {
 
@@ -53,7 +54,6 @@ exports.addUser = function(data, cb) {
 
 exports.addNews = function(data, cb) {
 
-
     data.content = md.render(data.content);
 
     var news = new News({
@@ -84,17 +84,23 @@ exports.findNews = function(req, cb) {
     //     });
 
     var page = req.query.page || 1 ;
-    this.pageQuery(page, 5, News, 'author', {}, {
+    this.pageQuery(page, PAGE_SIZE, News, 'author', {}, {
         created_time: 'desc'
     }, function(error, data){
         if(error){
             next(error);
         }else{
-            // console.log(data.results)
             cb(true,data);
         }
     });
+};
 
+exports.findNewsOne = function(req, id, cb) {
+    News.findOne({_id: id})
+        .populate('author')
+        .exec(function(err, docs) {
+            cb(true,docs.toObject());
+        });
 };
 
 
