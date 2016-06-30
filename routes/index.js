@@ -81,14 +81,5 @@ router.get('/blogs', function(req, res, next) {
   })
 });
 
-router.get('/login', function(req, res, next) {
-  res.render('login', { layout: 'lg' });
-});
-
-router.post('/login', function(req, res, next) {
-  dbHelper.findUsr(req.body, function (success, doc) {
-    res.send(doc);
-  })
-});
 
 module.exports = router;

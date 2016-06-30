@@ -8,7 +8,7 @@ function doLogin() {
 
   $.ajax({
     type: "POST",
-    url: "/login",
+    url: "/",
     contentType: "application/json",
     dataType: "json",
     data: JSON.stringify({
@@ -23,7 +23,7 @@ function doLogin() {
         $.cookie('password', result.data.password, {expires:30});
         $.cookie('imgurl', result.data.imgUrl, {expires:30});
         $.cookie('id', result.data._id, {expires:30});
-        location.href = "/blogs";
+        location.href = "/p/blogs";
       }
     }
   })
