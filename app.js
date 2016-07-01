@@ -57,6 +57,7 @@ app.use(session({
 
 
 app.use('/', require('./routes/login'));
+app.use('/pdf', require('./routes/pdf'));
 app.use('/p', authority.isAuthenticated, require('./routes/index'));
 app.use('/admin', authority.isAuthenticated, require('./routes/admin'));
 

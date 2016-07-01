@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var dbHelper = require('../db/dbHelper');
+var fs = require('fs');
+var NodePDF = require('nodepdf');
+var config = require('../config');
 
 
 router.get('/', function(req, res, next) {
@@ -13,5 +16,6 @@ router.post('/', function(req, res, next) {
     res.send(doc);
   })
 });
+
 
 module.exports = router;
