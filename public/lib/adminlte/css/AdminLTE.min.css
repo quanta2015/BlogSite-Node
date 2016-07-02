@@ -1472,7 +1472,7 @@ a:hover, a:active, a:focus {
 	position: relative
 }
 .box-header.with-border {
-	border-bottom: 1px solid #f4f4f4
+	border-bottom: 1px dashed #dbdbdb;
 }
 .collapsed-box .box-header.with-border {
 	border-bottom: none
@@ -1515,7 +1515,7 @@ a:hover, a:active, a:focus {
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 3px;
 	border-bottom-left-radius: 3px;
-	padding: 10px
+	padding: 10px;
 }
 .no-header .box-body {
 	border-top-right-radius: 3px;
@@ -4248,4 +4248,26 @@ table.text-center, table.text-center td, table.text-center th {
     float: right;
     display: block;
     font-size: 10px;
+
+}
+
+.box-menu a {
+	float: right;
+	display: block;
+	font-size: 10px;
+	margin-left: 10px;
+}
+
+.box-menu {
+	padding:10px;
+	border-top: 1px dashed #dbdbdb;
+}
+
+.box-menu:after {
+	display:block;clear:both;content:"";visibility:hidden;height:0;
+}
+
+.box-limit {
+	max-height: 300px;
+	overflow: hidden;
 }

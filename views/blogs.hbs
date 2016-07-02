@@ -21,10 +21,14 @@
             <span class="postdate"><b>发布于 {{formatDate meta.createAt}}</b><i>{{timeFromNow meta.createAt}}</i></span>
           </div>
         </div>
-        <div class="box-body">
+        <div class="box-body box-limit">
           <p> {{{content}}}</p>
-          <div class="menu-block"><a href="/pdf/{{_id}}" class="btn btn-primary btn-sm">导出pdf</a></div>
+          <div class="menu-block"></div>
         </div>
+          <div class="box-menu">
+              <a href="/pdf/{{_id}}" class="btn btn-primary btn-sm">导出pdf</a>
+              <a href="/pdf/blogPdf/{{_id}}" class="btn btn-primary btn-sm">Read More</a>
+          </div>
 
       </div>
     {{/each}}

@@ -10,6 +10,8 @@ var config = require('../config');
 
 router.get('/blogs', function(req, res, next) {
   dbHelper.findNews(req, function (success, data) {
+
+    
     res.render('blogs', {
       entries: data.results,
       pageCount: data.pageCount,
