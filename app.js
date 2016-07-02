@@ -30,12 +30,6 @@ var hbs = exphbs.create({
 });
 app.engine('hbs', hbs.engine);
 
-// //连接数据库
-// try {
-//     mongoose.connect(config.db.url);
-// } catch (error) {
-//     console.log(error);
-// }
 
 //配置解析器，静态资源映射
 app.use(logger('dev'));
@@ -43,6 +37,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/')));
 
 config.site.path = path.join(__dirname, 'public');
 
@@ -54,7 +49,6 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }));
-
 
 app.use('/', require('./routes/login'));
 app.use('/pdf', require('./routes/pdf'));

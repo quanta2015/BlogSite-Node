@@ -2,7 +2,14 @@ $(init);
 
 function init() {
   $("body").on('click', '#loginBtn', doLogin);
+
+  $(document).keyup(function(e){
+      if (e.keyCode == 13) {
+          doLogin();
+      }
+  })
 }
+
 
 function doLogin() {
 

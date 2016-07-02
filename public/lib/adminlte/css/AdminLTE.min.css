@@ -1546,13 +1546,14 @@ a:hover, a:active, a:focus {
 	border-bottom-left-radius: 0
 }
 .box-footer {
+	position: relative;
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 3px;
 	border-bottom-left-radius: 3px;
 	border-top: 1px solid #f4f4f4;
 	padding: 10px;
-	background-color: #fff
+	background-color: #fff;
 }
 .chart-legend {
 	margin: 10px 0
@@ -4270,4 +4271,56 @@ table.text-center, table.text-center td, table.text-center th {
 .box-limit {
 	max-height: 300px;
 	overflow: hidden;
+}
+
+.box-footer a {
+	margin-right: 10px;
+}
+
+.box-footer #uploadFile  {
+	opacity: 0;
+	width: 104px;
+	height: 34px;
+	float: left;
+	position: absolute;
+	top:10px;
+	left:10px;
+}
+
+
+.pg-wrapper {
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0,0,0,0.5);
+	z-index: 999999990;
+	display: none;
+}
+
+.box-body img {
+	max-width: 900px;
+	border: 1px solid #eee;
+}
+
+.pg-wrapper>.pg-layer {
+	width: 400px;
+	*height: 24px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform:translate(-50%,-50%);
+}
+
+.pg-wrapper>.pg-layer>.pg-bar {
+	width: 100%;
+}
+
+.pg-wrapper>.pg-layer>.pg-info{
+	position: absolute;
+	top:2px;
+	left: 190px;
+	font: 12px/1.5 "微软雅黑";
+	color: #666;
 }

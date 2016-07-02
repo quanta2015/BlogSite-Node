@@ -22,7 +22,12 @@
                 <textarea class="textarea" id="newsContent" placeholder="文章内容" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
             </div>
             <div class="box-footer">
-              <button type="submit" class="btn btn-primary pull-right" id="addNewsBtn">发布文章</button>
+                <input type="file" id="uploadFile" multiple="multiple"  accept="image/gif, image/jpeg, image/png, image/tiff">
+                <a class="btn btn-primary"><i class="fa fa-camera fa-fw"></i> 选择文件</a>
+                <a class="btn btn-primary disabled" id="UploadBtn"><i class="fa fa-upload fa-fw"></i> 上传</a>
+
+                <a class="btn btn-primary pull-right" id="addNewsBtn">发布文章</a>
+
             </div>
           </div>
         </div>
@@ -32,5 +37,14 @@
     </section>
 </div>
 
+<div class="pg-wrapper">
+    <div class="pg-layer">
+        <div class="pg-bar"></div>
+        <span class="pg-info">0%</span>
+    </div>
+</div>
+
+<script src="/lib/socket.io/socket.io.js"></script>
+<script src="/blog/common.js"></script>
 <script src="/blog/newsAdmin.js"></script>
 

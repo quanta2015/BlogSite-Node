@@ -64,8 +64,13 @@ exports.addNews = function(data, cb) {
 
     news.save(function(err,doc){
         if (err) {
-            cb(false,err);
+            entries.code = 99;
+            entries.msg = err;
+            cb(false,entries);
         }else{
+            entries.code = 0;
+            entries.msg = '发布新闻成功！';
+            entries.data = doc.toObject();
             cb(true,entries);
         }
     })
@@ -99,6 +104,8 @@ exports.findNewsOne = function(req, id, cb) {
     News.findOne({_id: id})
         .populate('author')
         .exec(function(err, docs) {
+
+            var docs = (docs !== null) ? docs : '';
             cb(true,docs.toObject());
         });
 };
