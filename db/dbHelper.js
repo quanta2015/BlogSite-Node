@@ -104,9 +104,8 @@ exports.findNewsOne = function(req, id, cb) {
     News.findOne({_id: id})
         .populate('author')
         .exec(function(err, docs) {
-
-            var docs = (docs !== null) ? docs : '';
-            cb(true,docs.toObject());
+            var docs = (docs !== null) ? docs.toObject() : '';
+            cb(true,docs);
         });
 };
 

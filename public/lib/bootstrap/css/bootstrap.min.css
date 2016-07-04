@@ -2537,7 +2537,7 @@ select[multiple].input-lg, textarea.input-lg {
   color: #a94442
 }
 .has-feedback label~.form-control-feedback {
-  top: 25px
+  top: 25px  
 }
 .has-feedback label.sr-only~.form-control-feedback {
   top: 0

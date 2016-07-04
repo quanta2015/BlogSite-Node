@@ -17,7 +17,6 @@ router.post('/news', function(req, res, next) {
 
 router.post('/uploadImg', function(req, res, next) {
 
-
   var io = global.io;
 
   var form = new formidable.IncomingForm();
@@ -30,7 +29,7 @@ router.post('/uploadImg', function(req, res, next) {
   form.maxFieldsSize = 30000 * 1024 * 1024;
 
 
-  uploadprogress = 0;
+  var uploadprogress = 0;
   console.log("start:upload----"+uploadprogress);
 
   form.parse(req);

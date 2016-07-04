@@ -1,7 +1,14 @@
 $(init);
 
 function init() {
-  $("body").on('click', '#loginBtn', doLogin);
+
+  $("#loginform").validate({
+    errorLabelContainer: "#errorMsg",
+    wrapper:"span",
+    submitHandler:function(form) {
+      doLogin();  //验证成功登陆
+    }
+  })
 
   $(document).keyup(function(e){
       if (e.keyCode == 13) {
@@ -9,7 +16,6 @@ function init() {
       }
   })
 }
-
 
 function doLogin() {
 

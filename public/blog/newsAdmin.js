@@ -9,10 +9,20 @@ function init() {
     $(".pg-info").text( percent + '%');
   });
 
+  $("#defaultForm").validate({
+    errorLabelContainer: "#errorMsg",
+    wrapper:"span",
+    onfocusout:false,
+    submitHandler:function(form) {
+      doAddNews();  //验证成功登陆
+    }
+  })
+
+
   $(".pg-bar").progressbar({value: 0});
   $(".pg-bar").progressbar( "option", "max", 100 );
 
-  $("body").on('click', '#addNewsBtn', doAddNews);
+  //$("body").on('click', '#addNewsBtn', doAddNews);
   $("body").on('click', '#UploadBtn', doUpload);
   $("body").on('change', '#uploadFile', preUpload);
 
