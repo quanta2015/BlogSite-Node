@@ -60,8 +60,6 @@ function notifyInfo(info) {
 function errorInfo(info) {
     alertify.set({ delay: 5000 });
     alertify.error(info);
-
-
 }
 
 //删除警告确认对话框

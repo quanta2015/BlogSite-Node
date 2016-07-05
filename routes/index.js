@@ -20,5 +20,4 @@ router.get('/blogs', function(req, res, next) {
   })
 });
 
-
 module.exports = router;
