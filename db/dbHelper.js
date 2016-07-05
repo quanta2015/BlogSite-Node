@@ -3,11 +3,12 @@ var mongoose = require('./db.js');
 var User = require('./schema/user');
 var News = require('./schema/news');
 var webHelper = require('../lib/webHelper');
+var config = require('../config')
 var async = require('async');
 var md = webHelper.Remarkable();
 
 
-var PAGE_SIZE = 5;
+var PAGE_SIZE = config.site.pagesize;
 
 exports.findUsr = function(data, cb) {
 
@@ -75,6 +76,26 @@ exports.addNews = function(data, cb) {
         }
     })
 };
+
+exports.deleteNews = function(id, cb) {
+
+    News.findById(id, function (err, doc) {
+        if (doc) {
+            doc.remove(function (err, doc) {
+                if (err) {
+                    entries.msg = err;
+                    cb(false,entries);
+                }else{
+                    entries.msg = '删除新闻成功！';
+                    cb(true,entries);
+                }
+            });
+        } else {
+            next(err);
+        }
+    });
+
+}
 
 exports.findNews = function(req, cb) {
     // News.find()

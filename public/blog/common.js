@@ -1,6 +1,6 @@
-/**
- * Created by liyang on 2016/7/2.
- */
+
+
+//textarea 定点插入
 (function($){
     $.fn.extend({
         insertAtCaret: function(myValue){
@@ -30,6 +30,8 @@
     })
 })(jQuery);
 
+
+//字符串格式化
 $.format = function (source, params) {
     if (arguments.length == 1)
         return function () {
@@ -50,11 +52,24 @@ $.format = function (source, params) {
 };
 
 function notifyInfo(info) {
-    alertify.set({ delay: 5000 });
-    alertify.success(info);
+    // alertify.set({ delay: 5000 });
+    // alertify.success(info);
+    toastr["success"](info)
 }
 
 function errorInfo(info) {
     alertify.set({ delay: 5000 });
     alertify.error(info);
+
+
 }
+
+//删除警告确认对话框
+$('[data-toggle="confirm"]').on('click', function (e) {
+    e.preventDefault();
+    var $this = $(this);
+    var msg = $this.data('message');
+    if (confirm(msg)) {
+        location.href = $this.attr('href');
+    }
+});

@@ -11,15 +11,15 @@
  */
 
  //提示消息对话框
-function notifyInfo(info) {
-	alertify.set({ delay: 2000 });
-	alertify.success(info);
-}
-
-function errorInfo(info) {
-	alertify.set({ delay: 2000 });
-	alertify.error(info);
-}
+// function notifyInfo(info) {
+// 	alertify.set({ delay: 2000 });
+// 	alertify.success(info);
+// }
+//
+// function errorInfo(info) {
+// 	alertify.set({ delay: 2000 });
+// 	alertify.error(info);
+// }
 
 (function (global, undefined) {
 	"use strict";

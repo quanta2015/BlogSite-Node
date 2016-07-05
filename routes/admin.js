@@ -6,7 +6,7 @@ var entries = require('../db/jsonRes');
 
 /* GET users listing. */
 router.get('/news', function(req, res, next) {
-  res.render('./admin/news', { title: 'Express', layout: 'admin' });
+  res.render('./admin/newsCreate', { title: 'Express', layout: 'admin' });
 });
 
 router.post('/news', function(req, res, next) {
@@ -16,6 +16,10 @@ router.post('/news', function(req, res, next) {
 });
 
 router.get('/newsList', function(req, res, next) {
+
+  var msg = req.session['message'] || '';
+  req.session['message'] = "";
+
   dbHelper.findNews(req, function (success, data) {
 
     res.render('./admin/newsList', {
@@ -23,10 +27,20 @@ router.get('/newsList', function(req, res, next) {
       pageCount: data.pageCount,
       pageNumber: data.pageNumber,
       count: data.count,
-      layout: 'admin'
+      layout: 'admin',
+      message: msg
     });
   })
+});
 
+router.get('/newsDelete/:id', function(req, res, next) {
+
+  var id = req.params.id;
+  dbHelper.deleteNews(id, function (success, data) {
+
+    req.session['message'] = data.msg;
+    res.redirect("/admin/newsList");
+  })
 });
 
 
