@@ -15,6 +15,21 @@ router.post('/news', function(req, res, next) {
   })
 });
 
+router.get('/newsList', function(req, res, next) {
+  dbHelper.findNews(req, function (success, data) {
+
+    res.render('./admin/newsList', {
+      entries: data.results,
+      pageCount: data.pageCount,
+      pageNumber: data.pageNumber,
+      count: data.count,
+      layout: 'admin'
+    });
+  })
+
+});
+
+
 router.post('/uploadImg', function(req, res, next) {
 
   var io = global.io;
