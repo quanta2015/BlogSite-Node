@@ -18,6 +18,7 @@ function init() {
     }
   })
 
+
   $(".pg-bar").progressbar({value: 0});
   $(".pg-bar").progressbar( "option", "max", 100 );
 

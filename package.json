@@ -19,6 +19,7 @@
     "express-handlebars": "^3.0.0",
     "express-session": "^1.13.0",
     "formidable": "^1.0.17",
+    "highlight.js": "^9.5.0",
     "html-pdf": "^2.0.1",
     "moment": "^2.13.0",
     "mongoose": "^4.5.1",

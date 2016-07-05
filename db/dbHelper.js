@@ -55,6 +55,8 @@ exports.addUser = function(data, cb) {
 
 exports.addNews = function(data, cb) {
 
+    
+
     data.content = md.render(data.content);
 
     var news = new News({
