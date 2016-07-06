@@ -53,7 +53,9 @@ app.use(session({
 app.use('/', require('./routes/login'));
 app.use('/pdf', require('./routes/pdf'));
 app.use('/p', authority.isAuthenticated, require('./routes/index'));
-app.use('/admin', authority.isAuthenticated, require('./routes/admin'));
+
+app.use('/admin', require('./routes/admin'));
+// app.use('/admin', authority.isAuthenticated, require('./routes/admin'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,0 +1,35 @@
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1>
+    {{entries.moocName}} <span class="hidden" id="moocId">{{entries._id}}</span>
+    <small>{{entries.teacher}}</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> 慕课管理</a></li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> 慕课编辑</a></li>
+      <li class="active">Content</li>
+    </ol>
+  </section>
+  <!-- Main content -->
+  <section class="content content-edit">
+      <div class="mooc-bar">
+          <div class="bar-line"></div>
+          {{#each entries.children}}
+              <li class="mooc-week"><i>{{addOne @index}}</i><span>第{{addOne @index}}章</span></li>
+              {{#each this}}
+                  <li data-toggle="select" data-id="{{_id}}"><span>{{addOne @index}}. {{title}}</span></li>
+              {{/each}}
+          {{/each}}
+      </div>
+      <div class="mooc-main">
+          <textarea class="textarea" id="moocContent" placeholder="文章内容" ></textarea>
+      </div>
+
+
+
+
+  </section>
+</div>
+
+<script src="/blog/common.js"></script>
+<script src="/blog/moocEdit.js"></script>

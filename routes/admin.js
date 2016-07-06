@@ -116,7 +116,7 @@ router.get('/moocList', function(req, res, next) {
 
 });
 
-//渲染新建新闻页面
+//渲染新建慕课页面
 router.get('/moocCreate', function(req, res, next) {
   res.render('./admin/moocCreate', { layout: 'admin' });
 });
@@ -127,8 +127,28 @@ router.post('/moocCreate', function(req, res, next) {
   })
 });
 
+//渲染编辑慕课页面
+router.get('/moocEdit/:id', function(req, res, next) {
+
+  var id = req.params.id;
+
+  dbHelper.findMoocOne( id,  function (success, doc) {
+    res.render('./admin/moocEdit', { entries: doc, layout: 'admin' });
+  })
+});
+
+router.post('/moocGetChapContent', function(req, res, next) {
 
 
+  var moocId    = req.body.moocId;
+  var chapId    = req.body.chapId;
+  var preChapId = req.body.preChapId;
+  var content   = req.body.content;
+
+  dbHelper.findMoocChapContent( moocId, chapId, preChapId, content, function (success, doc) {
+    res.send(doc);
+  })
+});
 
 
 module.exports = router;

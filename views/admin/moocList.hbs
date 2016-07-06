@@ -18,11 +18,13 @@
 
           <div class="mooc-wrapper">
           {{#each entries}}
+              <a href="/admin/moocEdit/{{_id}}">
               <div class="box-mooc">
-                  <a href="/admin/moocEdit"><img src="{{moocThumb}}" ></a>
+                  <img src="{{moocThumb}}" >
                   <h1 class="box-title">{{moocName}}</h3>
                   <h2 class="box-title">{{teacher}}</h5>
               </div>
+              </a>
           {{/each}}
           </div>
 

@@ -4,6 +4,7 @@ var User = require('./schema/user');
 var News = require('./schema/news');
 var Mooc = require('./schema/mooc');
 var Chapter = require('./schema/chapter');
+var _ = require('underscore');
 
 
 var webHelper = require('../lib/webHelper');
@@ -180,7 +181,8 @@ exports.addMooc = function(data, cb) {
     for (var i = 0; i < data.weekCount; i++) {
         for(var j = 0;j < data.classHour; j++) {
             mooc.children.push({
-                content: '',
+                content: ' ',
+                title: 'XXXX',
                 week: i,
                 chapter: j
             });
@@ -193,7 +195,6 @@ exports.addMooc = function(data, cb) {
 
 
 exports.findMooc = function(req, cb) {
-
     var page = req.query.page || 1 ;
     this.pageQuery(page, PAGE_SIZE, Mooc, 'author', {}, {
         created_time: 'desc'
@@ -204,4 +205,65 @@ exports.findMooc = function(req, cb) {
             cb(true,data);
         }
     });
+};
+
+exports.findMoocOne = function(id, cb) {
+
+    Mooc.findOne({_id: id}, function(err, docs) {
+        var mooc = docs.toObject() || '';
+        mooc.children = _.groupBy( mooc.children , "week" );
+        cb(true,mooc);
+    });
+};
+
+exports.findMoocChapContent = function(moocId, chapId, preChapId, content, cb) {
+
+    // Mooc.findOne({_id: id}, function(err, docs) {
+    //     var mooc = docs.toObject() || '';
+    //     mooc.children = _.groupBy( mooc.children , "week" );
+    //
+    //     docs = mooc.children[week][chap];
+    //     cb(true,docs);
+    // });
+
+    // Mooc.update({"_id": moocId, "children._id": preChapId },{$set :{
+    //         'children.$.content': content
+    //     }
+    // },function(error,data){
+    //     if(error) {
+    //         console.log(error);
+    //     }else {
+    //         console.log(data);
+    //     }
+    // })
+
+    async.waterfall([
+        function (callback) {
+            Mooc.findOne({"_id": moocId, "children._id": chapId }, function(err, docs) {
+                var mooc = docs.toObject() || '';
+                var chapList = mooc.children;
+                var doc = _.find(chapList,function(item) {
+                    if (item._id.toString() === chapId)
+                    return this;
+                })
+                callback(err,doc);
+            });
+        },
+        function (doc, callback) {
+
+            if (chapId !== preChapId) {
+                Mooc.update({"_id": moocId, "children._id": preChapId },{$set :{
+                    'children.$.content': content
+                }
+                },function(err,data){
+                    callback(err, doc);
+                })
+            }else{
+                callback(true, doc);
+            }
+
+        }
+    ], function (err, result) {
+        cb(true, result);
+    })
 };

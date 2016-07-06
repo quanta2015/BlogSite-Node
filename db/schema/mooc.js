@@ -5,6 +5,7 @@ var chapterSchema = new Schema({
     moocId: String,
     week: Number,
     chapter: Number,
+    title: String,
     content: String,
     meta: {
         updateAt: {type:Date, default: Date.now()},
