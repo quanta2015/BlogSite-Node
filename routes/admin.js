@@ -131,14 +131,12 @@ router.post('/moocCreate', function(req, res, next) {
 router.get('/moocEdit/:id', function(req, res, next) {
 
   var id = req.params.id;
-
   dbHelper.findMoocOne( id,  function (success, doc) {
     res.render('./admin/moocEdit', { entries: doc, layout: 'admin' });
   })
 });
 
 router.post('/moocGetChapContent', function(req, res, next) {
-
 
   var moocId    = req.body.moocId;
   var chapId    = req.body.chapId;
@@ -149,6 +147,31 @@ router.post('/moocGetChapContent', function(req, res, next) {
     res.send(doc);
   })
 });
+
+
+router.post('/moocSetChapTitle', function(req, res, next) {
+
+  var moocId    = req.body.moocId;
+  var chapTitle = req.body.chapTitle;
+  var chapId    = req.body.chapId;
+
+  dbHelper.updateMoocChapTitle( moocId, chapId, chapTitle, function (success, doc) {
+    res.send(doc);
+  })
+});
+
+
+router.post('/moocGetChapTitle', function(req, res, next) {
+
+  var moocId    = req.body.moocId;
+  var chapId    = req.body.chapId;
+
+  dbHelper.queryMoocChapTitle( moocId, chapId, function (success, doc) {
+    res.send(doc);
+  })
+});
+
+
 
 
 module.exports = router;

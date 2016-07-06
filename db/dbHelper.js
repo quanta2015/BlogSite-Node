@@ -239,6 +239,8 @@ exports.findMoocChapContent = function(moocId, chapId, preChapId, content, cb) {
 
     async.waterfall([
         function (callback) {
+
+            //取出章节内容显示
             Mooc.findOne({"_id": moocId, "children._id": chapId }, function(err, docs) {
                 var mooc = docs.toObject() || '';
                 var chapList = mooc.children;
@@ -251,6 +253,7 @@ exports.findMoocChapContent = function(moocId, chapId, preChapId, content, cb) {
         },
         function (doc, callback) {
 
+            //如果章节相同的话，不保存编辑内容
             if (chapId !== preChapId) {
                 Mooc.update({"_id": moocId, "children._id": preChapId },{$set :{
                     'children.$.content': content
@@ -261,9 +264,33 @@ exports.findMoocChapContent = function(moocId, chapId, preChapId, content, cb) {
             }else{
                 callback(true, doc);
             }
-
         }
     ], function (err, result) {
         cb(true, result);
+    })
+};
+
+exports.updateMoocChapTitle = function( moocId, chapId, chapTitle, cb) {
+
+    Mooc.update({"_id": moocId, "children._id": chapId },{$set :{
+        'children.$.title': chapTitle
+    }
+    },function(err,result){
+        cb(err, result);
+    })
+};
+
+exports.queryMoocChapTitle = function( moocId, chapId, cb) {
+
+    Mooc.findOne({"_id": moocId, "children._id": chapId },function(err,result){
+
+        var mooc = result.toObject() || '';
+        var chapList = mooc.children;
+        var doc = _.find(chapList,function(item) {
+            if (item._id.toString() === chapId)
+                return item;
+        })
+
+        cb(err, doc);
     })
 };
