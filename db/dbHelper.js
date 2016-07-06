@@ -2,6 +2,10 @@ var entries = require('./jsonRes');
 var mongoose = require('./db.js');
 var User = require('./schema/user');
 var News = require('./schema/news');
+var Mooc = require('./schema/mooc');
+var Chapter = require('./schema/chapter');
+
+
 var webHelper = require('../lib/webHelper');
 var config = require('../config')
 var async = require('async');
@@ -55,8 +59,7 @@ exports.addUser = function(data, cb) {
 
 exports.addNews = function(data, cb) {
 
-    
-
+    //将markdown格式的新闻内容转换成html格式
     data.content = md.render(data.content);
 
     var news = new News({
@@ -162,5 +165,43 @@ exports.pageQuery = function (page, pageSize, Model, populate, queryParams, sort
         $page.results = newsList;
         $page.count = count;
         callback(err, $page);
+    });
+};
+
+
+
+exports.addMooc = function(data, cb) {
+
+    var mooc = new Mooc({
+        moocName: data.moocName,
+        teacher: data.teacher,
+        moocThumb:data.moocThumb
+    });
+    for (var i = 0; i < data.weekCount; i++) {
+        for(var j = 0;j < data.classHour; j++) {
+            mooc.children.push({
+                content: '',
+                week: i,
+                chapter: j
+            });
+        }
+    }
+    mooc.save(function(err,doc){
+        cb(err, doc);
+    })
+};
+
+
+exports.findMooc = function(req, cb) {
+
+    var page = req.query.page || 1 ;
+    this.pageQuery(page, PAGE_SIZE, Mooc, 'author', {}, {
+        created_time: 'desc'
+    }, function(error, data){
+        if(error){
+            next(error);
+        }else{
+            cb(true,data);
+        }
     });
 };

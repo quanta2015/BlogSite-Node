@@ -1,0 +1,64 @@
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1>
+    创建慕课
+    <small>关于H5/JS/CSS3/NODEJS的文章</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> 慕课管理</a></li>
+      <li class="active">创建慕课</li>
+    </ol>
+  </section>
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box">
+          <form id="defaultForm" action="">
+            <div class="box-header">
+
+            </div>
+            <div class="box-body pad">
+                <div class="form-group">
+                    <label>慕课名称</label>
+                    <input type="text" class="form-control" id="moocName" placeholder="慕课名称" required>
+                </div>
+                <div class="form-group">
+                    <label>教师名称</label>
+                    <input type="text" class="form-control" id="teacher" placeholder="教师名称" required>
+                </div>
+                <div class="form-group">
+                    <label>学期周数</label>
+                    <input type="number" class="form-control" id="weekCount" placeholder="学期周数" required>
+                </div>
+                <div class="form-group">
+                    <label>每周课时</label>
+                    <input type="number" class="form-control" id="classHour" placeholder="每周课时" required>
+                </div>
+                <div class="form-thumb">
+                    <img  class="img-thumbnail" id="moocThumb">
+                </div>
+            </div>
+            <div class="box-footer">
+              <input type="file" id="uploadFile" multiple="multiple"  accept="image/*">
+              <a class="btn btn-primary"><i class="fa fa-camera fa-fw"></i> 选择文件</a>
+              <a class="btn btn-primary disabled" id="UploadBtn"><i class="fa fa-upload fa-fw"></i> 上传</a>
+              <button type="submit" class="btn btn-primary pull-right" id="addMoocBtn">发布慕课</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- /.col-->
+    </div>
+    <!-- ./row -->
+  </section>
+</div>
+<div class="pg-wrapper">
+  <div class="pg-layer">
+    <div class="pg-bar"></div>
+    <span class="pg-info">0%</span>
+  </div>
+</div>
+<script src="/lib/socket.io/socket.io.js"></script>
+<script src="/blog/common.js"></script>
+<script src="/blog/moocCreateAdmin.js"></script>

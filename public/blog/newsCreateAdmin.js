@@ -10,11 +10,10 @@ function init() {
   });
 
   $("#defaultForm").validate({
-    errorLabelContainer: "#errorMsg",
     wrapper:"span",
     onfocusout:false,
     submitHandler:function(form) {
-      doAddNews();  //验证成功登陆
+      doAddNews();  //验证成功则调用添加新闻函数
     }
   })
 

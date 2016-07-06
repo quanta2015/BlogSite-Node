@@ -4,17 +4,19 @@ var dbHelper = require('../db/dbHelper');
 var formidable = require('formidable');
 var entries = require('../db/jsonRes');
 
-/* GET users listing. */
+//渲染新建新闻页面
 router.get('/news', function(req, res, next) {
   res.render('./admin/newsCreate', { title: 'Express', layout: 'admin' });
 });
 
+//创建新闻
 router.post('/news', function(req, res, next) {
   dbHelper.addNews(req.body, function (success, doc) {
     res.send(doc);
   })
 });
 
+//渲染新闻列表页面
 router.get('/newsList', function(req, res, next) {
 
   var msg = req.session['message'] || '';
@@ -33,6 +35,8 @@ router.get('/newsList', function(req, res, next) {
   })
 });
 
+
+//删除新闻
 router.get('/newsDelete/:id', function(req, res, next) {
 
   var id = req.params.id;
@@ -43,7 +47,7 @@ router.get('/newsDelete/:id', function(req, res, next) {
   })
 });
 
-
+//上传图片
 router.post('/uploadImg', function(req, res, next) {
 
   var io = global.io;
@@ -93,8 +97,38 @@ router.post('/uploadImg', function(req, res, next) {
         res.end(callback);
       });
 
+});
+
+
+//渲染新建新闻页面
+router.get('/moocList', function(req, res, next) {
+
+  dbHelper.findMooc(req, function (success, data) {
+
+    res.render('./admin/moocList', {
+      entries: data.results,
+      pageCount: data.pageCount,
+      pageNumber: data.pageNumber,
+      count: data.count,
+      layout: 'admin'
+    });
+  })
 
 });
+
+//渲染新建新闻页面
+router.get('/moocCreate', function(req, res, next) {
+  res.render('./admin/moocCreate', { layout: 'admin' });
+});
+
+router.post('/moocCreate', function(req, res, next) {
+  dbHelper.addMooc(req.body, function (success, doc) {
+    res.send(doc);
+  })
+});
+
+
+
 
 
 module.exports = router;
