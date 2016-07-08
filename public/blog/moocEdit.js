@@ -1,10 +1,11 @@
-var preChapId, moocId, updateChapId;
+var preChapId, moocId, updateChapId, selectChapId;
 
 $(init);
 
 function init() {
   //preChapId = $("[data-id]").first().data("id");
   preChapId = "";
+  updateChapId = "";
   moocId = $("#moocId").text();
 
 
@@ -23,6 +24,7 @@ $('[data-toggle="select"]').on('click', function (e) {
   e.preventDefault();
   var $this = $(this);
   var chapId = $this.data('id');
+  selectChapId = chapId;
   var content = $("#moocContent").val();
 
   //编辑按钮激活状态
@@ -50,15 +52,27 @@ $('[data-button="edit"]').on('click', function (e) {
   var $this = $(this);
 
   updateChapId =  $this.parent().data('id');
-
-  // $("#chapTitle").remove();
   $this.parent().prepend('<input type="text" class="form-control" id="chapTitle">');
   doQueryTitle();
-
-
-
 });
 
+$('[data-button="del"]').on('click', function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+  var $this = $(this);
+
+  updateChapId =  $this.parent().data('id');
+  doDeleteChap(updateChapId);
+});
+
+
+$('[data-button="add"]').on('click', function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+  var $this = $(this);
+
+  doAddChap(selectChapId);
+});
 
 
 function getChapContent( chapId, content ) {
@@ -69,7 +83,6 @@ function getChapContent( chapId, content ) {
       'moocId': moocId,
       'content': content
     });
-
   preChapId = chapId;
 
   $.ajax({
@@ -99,7 +112,10 @@ function doQueryTitle() {
     success: function(result) {
       console.log(result);
       $("#chapTitle").val(result.title);
-      $("#chapTitle").focus();
+
+       $("#chapTitle").select();
+      
+      // $("#chapTitle").focus();
     }
   })
 
@@ -126,4 +142,37 @@ function doUpdateTitle() {
     }
   })
 
+}
+
+function doDeleteChap(id) {
+  $.ajax({
+    type: "post",
+    url: "/admin/moocDeleteChap",
+    contentType: "application/json",
+    dataType: "json",
+    data: JSON.stringify({
+      'moocId': moocId,
+      'chapId': id
+    }),
+    success: function(result) {
+      location.href = moocId;
+    }
+  })
+}
+
+
+function doAddChap(id) {
+  $.ajax({
+    type: "post",
+    url: "/admin/moocAddChap",
+    contentType: "application/json",
+    dataType: "json",
+    data: JSON.stringify({
+      'moocId': moocId,
+      'chapId': id
+    }),
+    success: function(result) {
+      location.href = moocId;
+    }
+  })
 }

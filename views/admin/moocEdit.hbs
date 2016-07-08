@@ -15,12 +15,18 @@
       <div class="mooc-bar">
           <div class="bar-line"></div>
           {{#each entries.children}}
-              <li class="mooc-week"><i>{{addOne @index}}</i><span>第{{addOne @index}}章</span></li>
+              <li data-toggle="select" class="mooc-week">
+                  <i>{{addOne @index}}</i><span>第{{addOne @index}}章</span>
+                  <a href="#" class="mooc-button" data-button="add"><i class="fa fa-plus"></i></a>
+              </li>
               {{#each this}}
                   <li data-toggle="select" data-id="{{_id}}">
                       <span>{{addOne @index}}. {{title}}</span>
                       <a href="#" class="mooc-button" data-button="del"><i class="fa fa-times"></i></a>
                       <a href="#" class="mooc-button" data-button="edit"><i class="fa fa-pencil"></i></a>
+
+                      <a href="#" class="mooc-button" data-button="up"><i class="fa fa-arrow-up"></i></a>
+                      <a href="#" class="mooc-button" data-button="down"><i class="fa fa-arrow-down"></i></a>
                   </li>
               {{/each}}
           {{/each}}

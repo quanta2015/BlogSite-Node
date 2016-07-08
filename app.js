@@ -32,7 +32,7 @@ app.engine('hbs', hbs.engine);
 
 
 //配置解析器，静态资源映射
-app.use(logger('dev'));
+// app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());

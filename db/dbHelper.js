@@ -242,7 +242,8 @@ exports.findMoocChapContent = function(moocId, chapId, preChapId, content, cb) {
 
             //取出章节内容显示
             Mooc.findOne({"_id": moocId, "children._id": chapId }, function(err, docs) {
-                var mooc = docs.toObject() || '';
+
+                var mooc = (typeof docs == "null")?"":docs.toObject();
                 var chapList = mooc.children;
                 var doc = _.find(chapList,function(item) {
                     if (item._id.toString() === chapId)
@@ -292,5 +293,107 @@ exports.queryMoocChapTitle = function( moocId, chapId, cb) {
         })
 
         cb(err, doc);
+    })
+};
+
+
+exports.deleteMoocChap = function( moocId, chapId, cb) {
+
+
+    Mooc.findOne({"_id": moocId, "children._id": chapId },function(err,doc){
+        var week,chap,index,count = 0,pos = 0;
+
+       
+        for( var i =0;i<doc.children.length;i++) {
+            var item = doc.children[i];
+            if(item._id.toString() == chapId){
+                week = item.week;
+                chap = item.chapter;
+                break;
+            }
+        }
+
+
+        //计算当前chap的位置pos  以及该chap的总章节数量count
+        for(var i =0;i<doc.children.length;i++) {
+            var item = doc.children[i];
+            if ( parseInt(item.week) == week ) {
+                count++;
+                if ( parseInt(item.chapter) > chap) {
+                    pos++;
+                }
+            }
+        }
+
+        //如果该week只有1个chap，将后续week的week减一
+        if (count == 1) {
+            for(var i = 0 ;i<doc.children.length;i++) {
+                var item = doc.children[i];
+                if(parseInt(item.week) > week) {
+                    doc.children[i].week--;
+                }
+            }
+        }
+
+        //如果该chap有后续chap，将后续chap减一
+        if( pos >0 ) {
+            for(var i = 0 ;i<doc.children.length;i++) {
+                var item = doc.children[i];
+                if (( parseInt(item.week) == week )&&( parseInt(item.chapter) > chap)) {
+                    doc.children[i].chapter--;
+                }
+            }
+        }
+
+        //删除选中chap
+        doc.children = _.filter(doc.children, function (item) {
+            return item._id.toString() !== chapId;
+        })
+
+        // console.log("index:" + index + " subling:" +count + " sIndex:" + pos);
+
+        doc.save(function(err) {
+            cb(err, doc);
+        });
+    })
+};
+
+
+
+exports.addMoocChap = function( moocId, chapId, cb) {
+
+    Mooc.findOne({"_id": moocId },function(err,doc){
+        var week,chap,index,chapCount=0;
+
+        //计算当前chap的位置index
+        for( index =0;index<doc.children.length;index++) {
+            var item = doc.children[index];
+            if(item._id.toString() == chapId){
+                week = item.week;
+                chap = item.chapter;
+                break;
+            }
+        }
+
+        //计算当前chap的位置pos  以及该chap的总章节数量count
+        for(var i =0;i<doc.children.length;i++) {
+            var item = doc.children[i];
+            if ( parseInt(item.week) == week ) {
+                chapCount++;
+            }
+        }
+
+        Mooc.update({"_id": moocId},{$push :{
+            "children": {
+                title: "XXXX",
+                week: week,
+                chapter: chapCount,
+                content: " "
+            },
+            "$position": index
+        }},function(err,result){
+            cb(err, result);
+        })
+
     })
 };

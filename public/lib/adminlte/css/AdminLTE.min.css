@@ -4414,7 +4414,8 @@ table.text-center, table.text-center td, table.text-center th {
 }
 
 .mooc-bar>.mooc-week {
-	background: #ddd
+	background: #ddd;
+	position: relative;
 }
 
 .mooc-main {

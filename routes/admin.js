@@ -171,7 +171,33 @@ router.post('/moocGetChapTitle', function(req, res, next) {
   })
 });
 
+router.post('/moocDeleteChap', function(req, res, next) {
+
+  var moocId    = req.body.moocId;
+  var chapId    = req.body.chapId;
+
+  dbHelper.deleteMoocChap( moocId, chapId, function (err, doc) {
+    if(err) {
+      return next(err);
+    }else{
+      res.send(doc);
+    }
+  })
+});
 
 
+router.post('/moocAddChap', function(req, res, next) {
+
+  var moocId    = req.body.moocId;
+  var chapId    = req.body.chapId;
+
+  dbHelper.addMoocChap( moocId, chapId, function (err, doc) {
+    if(err) {
+      return next(err);
+    }else{
+      res.send(doc);
+    }
+  })
+});
 
 module.exports = router;
