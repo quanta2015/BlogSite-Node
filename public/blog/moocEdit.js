@@ -3,19 +3,19 @@ var preChapId, moocId, updateChapId, selectChapId;
 $(init);
 
 function init() {
-  //preChapId = $("[data-id]").first().data("id");
+
   preChapId = "";
   updateChapId = "";
   moocId = $("#moocId").text();
 
-
-  $(document).keyup(function(e){
-    if (e.keyCode == 13) {
-      doUpdateTitle();
-    }
-  })
-
+  $('body').on('keyup', preUpdateTitle)
   $('body').on('blur', '#chapTitle' , doUpdateTitle);
+}
+
+function preUpdateTitle(e) {
+  if ((e.keyCode == 13)&&(typeof($("#chapTitle").val()) !== "undefined")) {
+    doUpdateTitle();
+  }
 }
 
 
@@ -95,137 +95,79 @@ $('[data-button="down"]').on('click', function (e) {
   doDownChap($this.parent().parent().data('id'));
 });
 
+function cbSetChapContent(result) {
+  $("#moocContent").val(result.content);
+}
+
+function cbQueryTitle(result) {
+  $("#chapTitle").val(result.title);
+  $("#chapTitle").select();
+}
+
+function cbReload() {
+  location.href = moocId;
+}
+
+function postData(url, data, cb) {
+  var promise = $.ajax({
+    type: "post",
+    url: url,
+    dataType: "json",
+    contentType: "application/json",
+    data:data
+  });
+  promise.done(cb);
+}
+
 
 function getChapContent( chapId, content ) {
 
   var jsonData = JSON.stringify({
-      'chapId': chapId,
-      'preChapId': preChapId,
-      'moocId': moocId,
-      'content': content
-    });
+    'chapId': chapId,
+    'preChapId': preChapId,
+    'moocId': moocId,
+    'content': content
+  });
   preChapId = chapId;
 
-  $.ajax({
-    type: "post",
-    url: "/admin/moocGetChapContent",
-    contentType: "application/json",
-    dataType: "json",
-    data: jsonData,
-    success: function(result) {
-      
-      $("#moocContent").val(result.content);
-    }
-  })
+  postData(urlMoocGetChapCont, jsonData, cbSetChapContent);
 }
 
 function doQueryTitle() {
 
-  $.ajax({
-    type: "post",
-    url: "/admin/moocGetChapTitle",
-    contentType: "application/json",
-    dataType: "json",
-    data: JSON.stringify({
-      'moocId': moocId,
-      'chapId': updateChapId
-    }),
-    success: function(result) {
-      console.log(result);
-      $("#chapTitle").val(result.title);
-
-       $("#chapTitle").select();
-    }
-  })
-
+  jsonData = JSON.stringify({ 'moocId': moocId, 'chapId': updateChapId });
+  postData(urlMoocGetChapTitle, jsonData, cbQueryTitle);
 }
-
 
 function doUpdateTitle() {
 
-  var chapTitle = $("#chapTitle").val();
+  jsonData = JSON.stringify({ 'moocId': moocId, 'chapId': updateChapId, 'chapTitle': $("#chapTitle").val() });
   $("#chapTitle").remove();
-
-  $.ajax({
-    type: "post",
-    url: "/admin/moocSetChapTitle",
-    contentType: "application/json",
-    dataType: "json",
-    data: JSON.stringify({
-      'moocId': moocId,
-      'chapTitle': chapTitle,
-      'chapId': updateChapId
-    }),
-    success: function(result) {
-      location.href = moocId;
-    }
-  })
-
+  postData(urlMoocSetChapTitle, jsonData, cbReload);
 }
 
 function doDeleteChap(id) {
-  $.ajax({
-    type: "post",
-    url: "/admin/moocDeleteChap",
-    contentType: "application/json",
-    dataType: "json",
-    data: JSON.stringify({
-      'moocId': moocId,
-      'chapId': id
-    }),
-    success: function(result) {
-      location.href = moocId;
-    }
-  })
+
+  jsonData = JSON.stringify({ 'moocId': moocId, 'chapId': id });
+  postData(urlMoocDelChap, jsonData, cbReload);
 }
 
 
 function doAddChap(id) {
-  $.ajax({
-    type: "post",
-    url: "/admin/moocAddChap",
-    contentType: "application/json",
-    dataType: "json",
-    data: JSON.stringify({
-      'moocId': moocId,
-      'chapId': id
-    }),
-    success: function(result) {
-      location.href = moocId;
-    }
-  })
+
+  jsonData = JSON.stringify({ 'moocId': moocId, 'chapId': id });
+  postData(urlMoocAddChap, jsonData, cbReload);
 }
 
 
 function doUpChap(id) {
-  $.ajax({
-    type: "post",
-    url: "/admin/moocUpChap",
-    contentType: "application/json",
-    dataType: "json",
-    data: JSON.stringify({
-      'moocId': moocId,
-      'chapId': id
-    }),
-    success: function(result) {
-      location.href = moocId;
-      
-    }
-  })
+
+  jsonData = JSON.stringify({ 'moocId': moocId, 'chapId': id });
+  postData(urlMoocUpChap, jsonData, cbReload);
 }
 
 function doDownChap(id) {
-  $.ajax({
-    type: "post",
-    url: "/admin/moocDownChap",
-    contentType: "application/json",
-    dataType: "json",
-    data: JSON.stringify({
-      'moocId': moocId,
-      'chapId': id
-    }),
-    success: function(result) {
-      location.href = moocId;
-    }
-  })
+
+  jsonData = JSON.stringify({ 'moocId': moocId, 'chapId': id });
+  postData(urlMoocDownChap, jsonData, cbReload);
 }

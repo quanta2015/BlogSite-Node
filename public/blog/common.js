@@ -1,3 +1,10 @@
+var urlMoocSetChapTitle = "/admin/moocSetChapTitle";
+var urlMoocDelChap      = "/admin/moocDeleteChap";
+var urlMoocAddChap      = "/admin/moocAddChap";
+var urlMoocUpChap       = "/admin/moocUpChap";
+var urlMoocDownChap     =  "/admin/moocDownChap";
+var urlMoocGetChapTitle = "/admin/moocGetChapTitle";
+var urlMoocGetChapCont  = "/admin/moocGetChapContent";
 
 
 //textarea 定点插入
