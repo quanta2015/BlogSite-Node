@@ -4,6 +4,8 @@ $(init);
 
 function init() {
 
+  // $('.loader-inner').loaders();
+
   preChapId = "";
   updateChapId = "";
   moocId = $("#moocId").text();
@@ -96,19 +98,27 @@ $('[data-button="down"]').on('click', function (e) {
 });
 
 function cbSetChapContent(result) {
+  $(".loader-wrapper").hide();
+
   $("#moocContent").val(result.content);
 }
 
 function cbQueryTitle(result) {
+  $(".loader-wrapper").hide();
+
   $("#chapTitle").val(result.title);
   $("#chapTitle").select();
 }
 
 function cbReload() {
+  $(".loader-wrapper").hide();
+
   location.href = moocId;
 }
 
 function postData(url, data, cb) {
+  $(".loader-wrapper").show();
+
   var promise = $.ajax({
     type: "post",
     url: url,
@@ -152,13 +162,11 @@ function doDeleteChap(id) {
   postData(urlMoocDelChap, jsonData, cbReload);
 }
 
-
 function doAddChap(id) {
 
   jsonData = JSON.stringify({ 'moocId': moocId, 'chapId': id });
   postData(urlMoocAddChap, jsonData, cbReload);
 }
-
 
 function doUpChap(id) {
 

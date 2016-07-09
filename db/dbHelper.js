@@ -291,7 +291,9 @@ exports.queryMoocChapTitle = function( moocId, chapId, cb) {
 
     Mooc.findOne({"_id": moocId, "children._id": chapId },function(err,result){
 
-        var mooc = result.toObject() || '';
+        var res = result || '';
+        var mooc = res.toObject();
+
         var chapList = mooc.children;
         var doc = _.find(chapList,function(item) {
             if (item._id.toString() === chapId)
