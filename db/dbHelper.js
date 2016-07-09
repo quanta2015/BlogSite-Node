@@ -211,12 +211,9 @@ exports.findMoocOne = function(id, cb) {
 
     Mooc.findOne({_id: id}, function(err, docs) {
         var mooc = docs.toObject() || '';
-        // mooc.children = _.groupBy( mooc.children , "week" );
 
         mooc.children = _.sortBy( mooc.children , "chapter");
-
         mooc.children = _.groupBy( mooc.children , "week" )
-
         cb(true,mooc);
     });
 };
@@ -248,10 +245,7 @@ exports.findMoocChapContent = function(moocId, chapId, preChapId, content, cb) {
             //取出章节内容显示
             Mooc.findOne({"_id": moocId, "children._id": chapId }, function(err, docs) {
 
-                var result = docs || '';
-                var mooc = result.toObject();
-                var chapList = mooc.children;
-                var doc = _.find(chapList,function(item) {
+                var doc = _.find(docs.children,function(item) {
                     if (item._id.toString() === chapId)
                     return this;
                 })
@@ -291,11 +285,7 @@ exports.queryMoocChapTitle = function( moocId, chapId, cb) {
 
     Mooc.findOne({"_id": moocId, "children._id": chapId },function(err,result){
 
-        var res = result || '';
-        var mooc = res.toObject();
-
-        var chapList = mooc.children;
-        var doc = _.find(chapList,function(item) {
+        var doc = _.find(result.children,function(item) {
             if (item._id.toString() === chapId)
                 return item;
         })
