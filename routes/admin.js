@@ -200,4 +200,36 @@ router.post('/moocAddChap', function(req, res, next) {
   })
 });
 
+
+router.post('/moocUpChap', function(req, res, next) {
+
+  var moocId    = req.body.moocId;
+  var chapId    = req.body.chapId;
+
+  dbHelper.upMoocChap( moocId, chapId, function (err, doc) {
+    if(err) {
+      return next(err);
+    }else{
+      res.send(doc);
+    }
+  })
+});
+
+router.post('/moocDownChap', function(req, res, next) {
+
+  var moocId    = req.body.moocId;
+  var chapId    = req.body.chapId;
+
+  dbHelper.downMoocChap( moocId, chapId, function (err, doc) {
+    if(err) {
+      return next(err);
+    }else{
+      res.send(doc);
+    }
+  })
+});
+
+
+
+
 module.exports = router;

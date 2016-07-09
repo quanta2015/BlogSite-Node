@@ -4449,6 +4449,11 @@ table.text-center, table.text-center td, table.text-center th {
     margin-left:5px;
 }
 
+.mooc-button-s {
+    height: 20px;
+    width: 15px;
+}
+
 .mooc-button:hover {
     color: #7b9e31;
     background: #fff;
@@ -4459,4 +4464,19 @@ table.text-center, table.text-center td, table.text-center th {
     top: 0;
     left: 0;
     height: 100%;
+    z-index: 9999;
+}
+
+.btn-wrapper-r {
+	position: absolute;
+	right:5px;
+	top:5px;
+	z-index: 90;
+}
+
+.btn-wrapper-l {
+	position: absolute;
+	left:0;
+	top:5px;
+	z-index: 90;
 }

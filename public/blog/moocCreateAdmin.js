@@ -72,8 +72,8 @@ function doAddMooc() {
       if (result.code == 99) {
         notifyInfo(result.msg);
       } else {
+        location.href = '/admin/moocList';
         notifyInfo("发布成功！");
-        //location.href = '/admin/moocList';
       }
     }
   })

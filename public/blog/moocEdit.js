@@ -19,7 +19,7 @@ function init() {
 }
 
 
-
+//点击后取出章节内容
 $('[data-toggle="select"]').on('click', function (e) {
   e.preventDefault();
   var $this = $(this);
@@ -37,41 +37,62 @@ $('[data-toggle="select"]').on('click', function (e) {
 $('[data-toggle="select"]').on('mouseover', function (e) {
   e.preventDefault();
   var $this = $(this);
-  $this.children('.mooc-button').show();
+  $this.find('.mooc-button').show();
 });
+
 
 $('[data-toggle="select"]').on('mouseout', function (e) {
   e.preventDefault();
   var $this = $(this);
-  $this.children('.mooc-button').hide();
+  $this.find('.mooc-button').hide();
 });
 
+//编辑章节标题
 $('[data-button="edit"]').on('click', function (e) {
   e.preventDefault();
   e.stopPropagation();
   var $this = $(this);
 
-  updateChapId =  $this.parent().data('id');
-  $this.parent().prepend('<input type="text" class="form-control" id="chapTitle">');
+  updateChapId =  $this.parent().parent().data('id');
+  $this.parent().parent().prepend('<input type="text" class="form-control" id="chapTitle">');
   doQueryTitle();
 });
 
+//删除章节
 $('[data-button="del"]').on('click', function (e) {
   e.preventDefault();
   e.stopPropagation();
   var $this = $(this);
 
-  updateChapId =  $this.parent().data('id');
+  updateChapId =  $this.parent().parent().data('id');
   doDeleteChap(updateChapId);
 });
 
-
+//添加章节
 $('[data-button="add"]').on('click', function (e) {
   e.preventDefault();
   e.stopPropagation();
   var $this = $(this);
 
   doAddChap(selectChapId);
+});
+
+//上移章节
+$('[data-button="up"]').on('click', function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+  var $this = $(this);
+
+  doUpChap($this.parent().parent().data('id'));
+});
+
+//上移章节
+$('[data-button="down"]').on('click', function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+  var $this = $(this);
+
+  doDownChap($this.parent().parent().data('id'));
 });
 
 
@@ -114,8 +135,6 @@ function doQueryTitle() {
       $("#chapTitle").val(result.title);
 
        $("#chapTitle").select();
-      
-      // $("#chapTitle").focus();
     }
   })
 
@@ -165,6 +184,40 @@ function doAddChap(id) {
   $.ajax({
     type: "post",
     url: "/admin/moocAddChap",
+    contentType: "application/json",
+    dataType: "json",
+    data: JSON.stringify({
+      'moocId': moocId,
+      'chapId': id
+    }),
+    success: function(result) {
+      location.href = moocId;
+    }
+  })
+}
+
+
+function doUpChap(id) {
+  $.ajax({
+    type: "post",
+    url: "/admin/moocUpChap",
+    contentType: "application/json",
+    dataType: "json",
+    data: JSON.stringify({
+      'moocId': moocId,
+      'chapId': id
+    }),
+    success: function(result) {
+      location.href = moocId;
+      
+    }
+  })
+}
+
+function doDownChap(id) {
+  $.ajax({
+    type: "post",
+    url: "/admin/moocDownChap",
     contentType: "application/json",
     dataType: "json",
     data: JSON.stringify({
