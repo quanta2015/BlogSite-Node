@@ -218,6 +218,21 @@ exports.findMoocOne = function(id, cb) {
     });
 };
 
+
+exports.findMoocChapContentOnly = function(moocId, chapId, preChapId, content, cb) {
+
+    //取出章节内容显示
+    Mooc.findOne({"_id": moocId, "children._id": chapId }, function(err, docs) {
+
+        var doc = _.find(docs.children,function(item) {
+            if (item._id.toString() === chapId)
+                return this;
+        })
+        cb(err, doc);
+    });
+
+};
+
 exports.findMoocChapContent = function(moocId, chapId, preChapId, content, cb) {
 
     // Mooc.findOne({_id: id}, function(err, docs) {
@@ -238,6 +253,8 @@ exports.findMoocChapContent = function(moocId, chapId, preChapId, content, cb) {
     //         console.log(data);
     //     }
     // })
+
+
 
     async.waterfall([
         function (callback) {

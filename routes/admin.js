@@ -220,7 +220,7 @@ router.post('/moocDownChap', function(req, res, next) {
   var moocId    = req.body.moocId;
   var chapId    = req.body.chapId;
 
-  dbHelper.downMoocChap( moocId, chapId, function (err, doc) {
+  dbHelper.MoocChap( moocId, chapId, function (err, doc) {
     if(err) {
       return next(err);
     }else{

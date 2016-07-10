@@ -4378,7 +4378,8 @@ table.text-center, table.text-center td, table.text-center th {
 }
 
 .mooc-bar {
-	flex-basis: 250px;
+	flex-basic:250px;
+	min-width: 250px;
 	padding: 0;
 	background: #eee;
 }
@@ -4419,9 +4420,10 @@ table.text-center, table.text-center td, table.text-center th {
 }
 
 .mooc-main {
-	background: #eee;
+	background: #fff;
 	flex:1 1 auto;
 	padding: 1px;
+	padding: 20px;
 }
 
 .mooc-main>textarea {

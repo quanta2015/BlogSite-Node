@@ -26,14 +26,16 @@ $('[data-toggle="select"]').on('click', function (e) {
   e.preventDefault();
   var $this = $(this);
   var chapId = $this.data('id');
-  selectChapId = chapId;
-  var content = $("#moocContent").val();
 
-  //编辑按钮激活状态
-  $('[data-toggle="select"]').removeClass('mooc-active');
-  $this.addClass('mooc-active');
+  if ( typeof(chapId) !== "undefined" ){
 
-  getChapContent( chapId, content);
+    selectChapId = chapId;
+    var content = $("#moocContent").val();
+    $('[data-toggle="select"]').removeClass('mooc-active');
+    $this.addClass('mooc-active');
+
+    getChapContent( chapId, content);
+  }
 });
 
 $('[data-toggle="select"]').on('mouseover', function (e) {
