@@ -100,25 +100,26 @@ $('[data-button="down"]').on('click', function (e) {
 });
 
 function cbSetChapContent(result) {
-  $(".loader-wrapper").hide();
+  $(".loader-wrapper").remove();
 
   $("#moocContent").val(result.content);
 }
 
 function cbQueryTitle(result) {
-  $(".loader-wrapper").hide();
+  $(".loader-wrapper").remove();
 
   $("#chapTitle").val(result.title);
   $("#chapTitle").select();
 }
 
 function cbReload() {
-  $(".loader-wrapper").hide();
-
+  // $(".loader-wrapper").remove();
   location.href = moocId;
 }
 
 function postData(url, data, cb) {
+
+  $('body').append(LOAD_WRAPPER);
   $(".loader-wrapper").show();
 
   var promise = $.ajax({

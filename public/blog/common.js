@@ -7,6 +7,10 @@ var urlMoocGetChapTitle = "/admin/moocGetChapTitle";
 var urlMoocGetChapCont  = "/admin/moocGetChapContent";
 var urlMoocGetChapContOnly  = "/p/moocGetChapContentOnly";
 
+
+var LOAD_WRAPPER = "<div class='loader-wrapper'><div class='loader'><div class='loader-inner ball-spin-fade-loader'><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div></div>";
+
+
 (function($){
     $.fn.autoTextarea = function(options) {
         var defaults={
