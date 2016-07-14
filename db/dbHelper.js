@@ -273,6 +273,7 @@ exports.findMoocChapContent = function(moocId, chapId, preChapId, content, cb) {
 
             //如果章节相同的话，不保存编辑内容
             if (chapId !== preChapId) {
+
                 Mooc.update({"_id": moocId, "children._id": preChapId },{$set :{
                     'children.$.content': content
                 }
